@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EditStudents</title>
+</head>
+
+<body>
+    <h3>If Statent</h3>
+    {% if total > 250%}
+    <p>Excellent</p>
+    {% endif %}
+
+    <h3>If Statement and Else Statement</h3>
+    {% if total > 250%}
+    <p>Excellent</p>
+    {% else %}
+    <p>Good</p>
+    {% endif %}
+
+    <h3>If Else Statement</h3>
+    {% if total > 250%}
+    <p>Excellent</p>
+    {% elif total
+    < 250 and total>200%}
+        <p>Very Good</p>
+        {% else %}
+        <p>Good</p>
+        {% endif %}
+        <h3>For Loop Statement</h3>
+        <ul>
+            {% for sub , mark in marks.items %}
+            <li>{{sub}} : {{mark}}</li>
+            {% endfor %}
+        </ul>
+
+
+</body>
+
+</html>
