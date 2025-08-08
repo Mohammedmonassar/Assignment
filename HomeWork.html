@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مقارنة محركات القوالب في Django</title>
+
+    <!-- Google Fonts: Tajawal for Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        /* Reset & General Styles */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #f1f1f1;
+            line-height: 1.8;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Main Title */
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin: 30px 0;
+            color: #ffffff;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        /* Section Styling */
+        
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        .section h2 i {
+            font-size: 1.5rem;
+        }
+        /* Table Styling */
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        th,
+        td {
+            padding: 14px 16px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #3a7bd5, #3a6073);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        td {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        /* Code Block Styling */
+        
+        .code-block {
+            background: #1e1e2e;
+            color: #f8f8f2;
+            padding: 16px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            margin: 15px 0;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+            direction: ltr;
+            text-align: left;
+        }
+        /* Responsive Adjustments */
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            .section h2 {
+                font-size: 1.5rem;
+            }
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+            th {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            td {
+                position: relative;
+                padding-left: 50%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                text-align: right;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: 45%;
+                font-weight: bold;
+                color: #a0d2ff;
+                text-align: left;
+            }
+        }
+        /* Footer */
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Main Title -->
+        <h1>مقارنة شاملة بين DTL، Jinja2 وMako في Django</h1>
+
+        <!-- Section 1: Django Template Filters -->
+        <div class="section">
+            <h2><i>📝</i> فلاتر Django Template Language (DTL)</h2>
+
+            <h3>فلاتر النصوص</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الفلتر</th>
+                        <th>الوظيفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="الفلتر"><code>lower</code></td>
+                        <td data-label="الوظيفة">تحويل النص إلى أحرف صغيرة</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>upper</code></td>
+                        <td data-label="الوظيفة">تحويل النص إلى أحرف كبيرة</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>title</code></td>
+                        <td data-label="الوظيفة">تحويل أول حرف من كل كلمة إلى كبير</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>length</code></td>
+                        <td data-label="الوظيفة">إرجاع عدد الأحرف</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>truncatechars:10</code></td>
+                        <td data-label="الوظيفة">قص النص بعد عدد معين من الأحرف</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3> <i>🔢</i> فلاتر الأرقام</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الفلتر</th>
+                        <th>الوظيفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="الفلتر"><code>add:"5"</code></td>
+                        <td data-label="الوظيفة">إضافة رقم للقيمة</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>divisibleby:"3"</code></td>
+                        <td data-label="الوظيفة">التحقق مما إذا كانت القيمة تقبل القسمة على رقم معين</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3> <i>⏳</i> فلاتر التاريخ والوقت</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الفلتر</th>
+                        <th>الوظيفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="الفلتر"><code>date:"Y-m-d"</code></td>
+                        <td data-label="الوظيفة">تنسيق التاريخ</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>time:"H:i"</code></td>
+                        <td data-label="الوظيفة">تنسيق الوقت</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>timesince</code></td>
+                        <td data-label="الوظيفة">عرض الفرق الزمني منذ تاريخ معين</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3> <i>⚙️</i> فلاتر منطقية / شرطية</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الفلتر</th>
+                        <th>الوظيفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="الفلتر"><code>default:"N/A"</code></td>
+                        <td data-label="الوظيفة">عرض قيمة افتراضية إذا كانت None</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>yesno:"نعم,لا,ربما"</code></td>
+                        <td data-label="الوظيفة">تحويل القيمة إلى نص مخصص</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3> <i>📂</i> فلاتر القوائم والمجموعات</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الفلتر</th>
+                        <th>الوظيفة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="الفلتر"><code>first</code></td>
+                        <td data-label="الوظيفة">عرض أول عنصر</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>last</code></td>
+                        <td data-label="الوظيفة">عرض آخر عنصر</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>join:", "</code></td>
+                        <td data-label="الوظيفة">دمج عناصر القائمة بفاصل معين</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الفلتر"><code>slice:":3"</code></td>
+                        <td data-label="الوظيفة">عرض أول ثلاث عناصر</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3> <i>🔧</i> طريقة التفعيل في مشروع Django</h3>
+            <div class="code-block">
+                # فلاتر DTL تعمل افتراضيًا بدون تثبيت.<br><br> # لتفعيل Jinja2:<br> - أضف Jinja2 إلى `settings.py` في قسم `TEMPLATES`.<br> - ركّب المكتبة إن لم تكن موجودة: `pip install Jinja2`<br><br> # لتفعيل Mako:<br> - ثبّت الحزمة: `pip install mako`<br>                - ثم إعداد المحرك داخل ملفات الإعدادات حسب المكتبة المستخدمة.
+            </div>
+        </div>
+
+        <!-- Section 2: Comparison Between DTL, Jinja2, Mako -->
+        <div class="section">
+            <h2><i>🆚</i> مقارنة بين DTL وJinja2 وMako في Django</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الميزة</th>
+                        <th>DTL (الافتراضي)</th>
+                        <th>Jinja2</th>
+                        <th>Mako</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="الميزة">السرعة</td>
+                        <td data-label="DTL">جيدة</td>
+                        <td data-label="Jinja2">أسرع من DTL</td>
+                        <td data-label="Mako">سريع جدًا</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">سهولة التعلم</td>
+                        <td data-label="DTL">سهل وبسيط</td>
+                        <td data-label="Jinja2">متوسط</td>
+                        <td data-label="Mako">معقد نوعًا ما</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">درجة الأمان</td>
+                        <td data-label="DTL">عالي جدًا</td>
+                        <td data-label="Jinja2">جيد (فلترة يدوية)</td>
+                        <td data-label="Mako">أقل أمانًا</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">الدعم في Django</td>
+                        <td data-label="DTL">مدعوم رسميًا</td>
+                        <td data-label="Jinja2">مدعوم خارجيًا</td>
+                        <td data-label="Mako">مدعوم خارجيًا</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">حرية التعبير</td>
+                        <td data-label="DTL">مقيد (لحماية المستخدم)</td>
+                        <td data-label="Jinja2">حر (يشبه Python)</td>
+                        <td data-label="Mako">كود حر جدًا</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">الملحقات والدوال</td>
+                        <td data-label="DTL">محدودة</td>
+                        <td data-label="Jinja2">كثيرة ومتقدمة</td>
+                        <td data-label="Mako">متقدمة</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">التوثيق والمجتمع</td>
+                        <td data-label="DTL">ممتاز</td>
+                        <td data-label="Jinja2">ممتاز</td>
+                        <td data-label="Mako">متوسط</td>
+                    </tr>
+                    <tr>
+                        <td data-label="الميزة">التخصيص</td>
+                        <td data-label="DTL">محدود</td>
+                        <td data-label="Jinja2">قابل للتخصيص عالي</td>
+                        <td data-label="Mako">قابل للتخصيص جدًا</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3> <i>🔧</i> كيفية تفعيل كل محرك قوالب</h3>
+            <div class="code-block">
+                ### 1. تفعيل DTL (الافتراضي)<br> لا يحتاج إعداد إضافي. يكون مفعّل تلقائيًا في Django:<br> 'BACKEND': 'django.template.backends.django.DjangoTemplates'
+            </div>
+
+            <div class="code-block">
+                ### 2. تفعيل Jinja2<br> الخطوات:
+                <br> - تثبيت: `pip install Jinja2`<br> - إضافة إعدادات في `settings.py`<br> - مثال:<br> 'BACKEND': 'django.template.backends.jinja2.Jinja2'
+            </div>
+
+            <div class="code-block">
+                ### 3. تفعيل Mako<br> الخطوات:
+                <br> - تثبيت: `pip install mako`<br> - استخدام مكتبة `django-mako-plus`<br> - إضافة إعدادات وربطها
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            &copy; 2025 تم التصميم بواسطة م/ محمد نعمان منصر
+        </footer>
+    </div>
+</body>
+
+</html>
